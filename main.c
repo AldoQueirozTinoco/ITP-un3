@@ -37,10 +37,15 @@ void creator(Tabela *tabelas) {
     // Aloca dinamicamente o tamanho das colunas
     tabelas->colunas = (colunas *)malloc(tabelas->numColunas * sizeof(colunas));
 
-    printf("Digite os nomes das colunas da tabela:\n");
+    printf("Digite os nomes das colunas da tabela e seus tipos:\n");
     for (int i = 0; i < tabelas->numColunas; i++) {
-        printf("Coluna %d: ", i + 1);
+        int temp;
+        printf("Coluna %d: ", i + 1); // nome das colunas
         scanf("%s", tabelas->colunas[i].nomecol);
+        printf("(CHAR=1,STRING=2,FLOAT=3,DOUBLE=4): "); //tipo das colunas
+        scanf("%d",&temp);
+        tabelas->colunas[i].tipo = temp;
+        
     }
 
     printf("Tabela criada com sucesso!\n");
@@ -48,11 +53,34 @@ void creator(Tabela *tabelas) {
 
 int main() {
     Tabela tabelas[5];
+    int escolha;
+    
+    printf("O QUE DESEJA FAZER?\n1 - Criar tabela\n2 - Criar linha\n3 - Excluir tabela\n4 - Procurar registro\n5 - Excluir linha\n6 -  \n");
+    scanf(" %i", &escolha);
+    
+    switch (escolha){
+    case 1: creator(&tabelas[0]);
+    /* bota os códigos de cada coisa nos respectivos cases*/
+        break;
+    case 2:
 
-    creator(&tabelas[0]);
+        break;
+    case 3:
 
-    printf("Nome: %s\n%d Linhas\n%d Colunas de nome(s)\n", tabelas[0].nomeTabela, tabelas[0].numLinhas, tabelas[0].numColunas);
-    printf("Nomes das colunas:\n");
+        break;
+    case 4:
+
+        break;
+    case 5:
+    
+        break;
+    default:
+        printf("Numero invalido");
+        break;
+        }
+
+    printf("Nome: %s\n%d Linhas\n%d Colunas\n", tabelas[0].nomeTabela, tabelas[0].numLinhas, tabelas[0].numColunas);
+
 
 
     // Liberar memória alocada dinamicamente
