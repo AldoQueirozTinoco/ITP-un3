@@ -48,8 +48,31 @@ void creator(Tabela *tabelas) {
 
 int main() {
     Tabela tabelas[5];
+    int escolha;
+    
+    printf("O QUE DESEJA FAZER?\n1 - Criar tabela\n2 - Criar linha\n3 - Excluir tabela\n4 - Procurar registro\n5 - Excluir linha\n6 -  \n");
+    scanf(" %i", &escolha);
+    
+    switch (escolha){
+    case 1: creator(&tabelas[0]);
+    /* bota os códigos de cada coisa nos respectivos cases*/
+        break;
+    case 2:
 
-    creator(&tabelas[0]);
+        break;
+    case 3:
+
+        break;
+    case 4:
+
+        break;
+    case 5:
+    
+        break;
+    default:
+        printf("Numero invalido");
+        break;
+        }
 
     printf("Nome: %s\n%d Linhas\n%d Colunas de nome(s)\n", tabelas[0].nomeTabela, tabelas[0].numLinhas, tabelas[0].numColunas);
     printf("Nomes das colunas:\n");
