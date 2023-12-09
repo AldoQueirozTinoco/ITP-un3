@@ -26,10 +26,14 @@ typedef struct {
     Celula **dados; // matriz de dados
 } Tabela;
 
-void creator(Tabela *tabelas) {
+void creator(Tabela *tabelas, int *counTab) {
     char nometabelas[50];
     printf("Escolha um nome para a tabela: ");
     scanf("%s", nometabelas);
+    
+    /*nomes das tabelas devem ser juntos, 
+    assim como os nomes das linhas e das colunas*/
+    
     strcpy(tabelas->nomeTabela, nometabelas);
     printf("Escolha a quantia de linhas e colunas da tabela: ");
     scanf("%d %d", &tabelas->numLinhas, &tabelas->numColunas);
@@ -47,20 +51,26 @@ void creator(Tabela *tabelas) {
         tabelas->colunas[i].tipo = temp;
         
     }
-
     printf("Tabela criada com sucesso!\n");
+    printf("Nome: %s\n%d Linhas\n%d Colunas\n", tabelas->nomeTabela, tabelas->numLinhas, tabelas->numColunas);
+    counTab+=1;
+    
+}
+
+void registrarium(Tabela *tabelas){
+    
 }
 
 int main() {
-    Tabela tabelas[5];
-    int escolha;
-    
-    printf("O QUE DESEJA FAZER?\n1 - Criar tabela\n2 - Criar linha\n3 - Excluir tabela\n4 - Procurar registro\n5 - Excluir linha\n6 -  \n");
+    Tabela tabelas[10];//Permite até 10 tabelas
+    int escolha, counTab=0;
+    while(escolha!=6){
+    printf("O QUE DESEJA FAZER?\n1 - Criar tabela\n2 - Criar linha\n3 - Excluir tabela\n4 - Procurar registro\n5 - Excluir linha\n6 - Sair\n");
     scanf(" %i", &escolha);
     
     switch (escolha){
-    case 1: creator(&tabelas[0]);
-    /* bota os códigos de cada coisa nos respectivos cases*/
+    case 1: creator(&tabelas[counTab],&counTab);
+    //Criador de tabelas por meio do tipo e nome
         break;
     case 2:
 
@@ -74,15 +84,16 @@ int main() {
     case 5:
     
         break;
+    case 6:
+        break;
     default:
         printf("Numero invalido");
         break;
         }
+        
+    }
 
-    printf("Nome: %s\n%d Linhas\n%d Colunas\n", tabelas[0].nomeTabela, tabelas[0].numLinhas, tabelas[0].numColunas);
-
-
-
+    
     // Liberar memória alocada dinamicamente
     free(tabelas[0].colunas);
 
