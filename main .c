@@ -90,9 +90,26 @@ void inserir(Tabela *tabelas, int *counTab) {
       printf("Tipo inválido!");
       break;
     }
-    
+
   }}
 }
+
+void excluirTab(Tabela*tabelas,int *counTab){
+  Tabela temp[10];
+  int count=0;
+  for(int i=0;i<10;i++){
+    if(tabelas[i].nomeTabela[0]!='\0'){
+      if(strcmp(tabelas[i].nomeTabela,tabelas->nomeTabela)!=0){
+        temp[count]=tabelas[i];
+        count++;
+      }
+      }
+    }
+  for(int i=0;i<10;i++){
+    tabelas[i]=temp[i];
+  }
+  counTab--;
+  }
 
 int main() {
     Tabela tabelas[10];//Permite até 10 tabelas
@@ -111,11 +128,18 @@ int main() {
 
         break;
     case 3:
-
+      int qualtab;
+      printf("Qual tabela deseja excluir?\n");
+      for(int i=0;i<=counTab;i++){
+        printf("%d - %s\n",i,tabelas[i].nomeTabela);
+      }
+      scanf("%d",&qualtab);
+      excluirTab(&tabelas[qualtab],&counTab);
+      printf("Tabela %d excluida!\n",qualtab);
+      qualtab=0;
         break;
     case 4:
-
-        break;
+      break;
     case 5:
 
         break;
@@ -130,9 +154,9 @@ int main() {
 
 
     // Liberar memória alocada dinamicamente
+    for(int i=0;i<counTab;i++){
     free(tabelas[0].colunas);
-    free(tabelas[0].dados);
+    free(tabelas[0].dados);}
 
     return 0;
 }
-
