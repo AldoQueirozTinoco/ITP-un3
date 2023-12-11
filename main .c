@@ -46,7 +46,7 @@ void creator(Tabela *tabelas, int *counTab) {
         int temp;
         printf("Coluna %d: ", i + 1); // nome das colunas
         scanf("%s", tabelas->colunas[i].nomecol);
-        printf("(CHAR=1,STRING=2,FLOAT=3,DOUBLE=4): "); //tipo das colunas
+        printf("(CHAR=0,STRING=1,INT=2,FLOAT=3,DOUBLE=4): \n"); //tipo das colunas
         scanf("%d",&temp);
         tabelas->colunas[i].tipo = temp;
 
@@ -55,34 +55,44 @@ void creator(Tabela *tabelas, int *counTab) {
   for(int i=0;i<tabelas->numLinhas;i++){
     tabelas->dados[i] = malloc(tabelas->numColunas *sizeof(Celula));
   };
-    printf("Tabela criada com sucesso!\n");
-    printf("Nome: %s\n%d Linhas\n%d Colunas\n", tabelas->nomeTabela, tabelas->numLinhas, tabelas->numColunas);
+    printf("Tabela criada com sucesso!\n\n");
+    printf("Nome: %s\n%d Linhas\n%d Colunas\n\n", tabelas->nomeTabela, tabelas->numLinhas, tabelas->numColunas);
     counTab+=1;
-  printf("Escreva os registros da tabela:");
-  /*Fazer uma função que insere os registros*/
-  for(int i=0;i<tabelas->numLinhas;i++){
-    for(int j=0;j<tabelas->numColunas;j++){
-  switch(tabelas->colunas[j].tipo){
-    case CHAR:
-    scanf("%c", &tabelas->dados[i][j].ischar);
-    break;
-    case(STR):
-      tabelas->dados[i][j].istring = malloc(sizeof(char)*50);
-      printf("Digite uma string de até 50 caracteres de espaço:\n");
-      fgets(tabelas->dados[i][j].istring,50,stdin);
-    break;
-    case(INT):
-      scanf("%d", &tabelas->dados[i][j].isint);
-    break;
-    case(FLOAT):
-      scanf("%f", &tabelas->dados[i][j].isfloat);
-    break;
-    case(DOUBLE):
-      scanf("%lf", &tabelas->dados[i][j].isdouble);
-    break;
   }
 
-}}}
+void inserir(Tabela *tabelas, int *counTab) {
+  printf("Escreva os registros da tabela:");
+    /*Fazer uma função que insere os registros*/
+    char temp;
+    for(int i=0;i<tabelas->numLinhas;i++){
+      for(int j=0;j<tabelas->numColunas;j++){
+          printf("Registro %d %d\n\n",i,j);
+    switch(tabelas->colunas[j].tipo){
+      case CHAR:
+      scanf(" %c", &tabelas->dados[i][j].ischar);
+      break;
+      case(STR):
+        tabelas->dados[i][j].istring = malloc(sizeof(char)*50);
+        printf("Digite uma string de até 50 caracteres de espaço:\n");
+        fgets(tabelas->dados[i][j].istring,50,stdin);
+        scanf("%c",&temp);
+      break;
+      case(INT):
+        scanf("%d", &tabelas->dados[i][j].isint);
+      break;
+      case(FLOAT):
+        scanf("%f", &tabelas->dados[i][j].isfloat);
+      break;
+      case(DOUBLE):
+        scanf("%lf", &tabelas->dados[i][j].isdouble);
+      break;
+      default:
+      printf("Tipo inválido!");
+      break;
+    }
+    
+  }}
+}
 
 int main() {
     Tabela tabelas[10];//Permite até 10 tabelas
@@ -94,6 +104,8 @@ int main() {
     switch (escolha){
     case 1: creator(&tabelas[counTab],&counTab);
     //Criador de tabelas por meio do tipo e nome
+    inserir(&tabelas[counTab],&counTab);
+    //Inserir os registros
         break;
     case 2:
 
