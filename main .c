@@ -40,7 +40,7 @@ void creator(Tabela *tabelas, int *counTab) {
 
     // Aloca dinamicamente o tamanho das colunas
     tabelas->colunas = (colunas *)malloc(tabelas->numColunas * sizeof(colunas));
-
+    //Colocando os nomes e os tipos, é possível fazer os registros nas linhas com a função "inserir"
     printf("Digite os nomes das colunas da tabela e seus tipos:\n");
     for (int i = 0; i < tabelas->numColunas; i++) {
         int temp;
@@ -51,40 +51,49 @@ void creator(Tabela *tabelas, int *counTab) {
         tabelas->colunas[i].tipo = temp;
 
     }
-  tabelas->dados = malloc(tabelas->numLinhas * sizeof(Celula*));//aloca a matriz de dados
+  tabelas->dados = malloc(tabelas->numLinhas * sizeof(Celula*));//aloca as linhas da matriz de dados
   for(int i=0;i<tabelas->numLinhas;i++){
-    tabelas->dados[i] = malloc(tabelas->numColunas *sizeof(Celula));
+    tabelas->dados[i] = malloc(tabelas->numColunas *sizeof(Celula));//aloca as colunas da matriz de dados
   };
     printf("Tabela criada com sucesso!\n\n");
     printf("Nome: %s\n%d Linhas\n%d Colunas\n\n", tabelas->nomeTabela, tabelas->numLinhas, tabelas->numColunas);
     counTab+=1;
   }
 
-void inserir(Tabela *tabelas, int *counTab) {
-  printf("Escreva os registros da tabela:");
+void inserir(Tabela *tabelas) {
+  printf("Escreva os registros da tabela:\n");
     /*Fazer uma função que insere os registros*/
     char temp;
     for(int i=0;i<tabelas->numLinhas;i++){
       for(int j=0;j<tabelas->numColunas;j++){
-          printf("Registro %d %d\n\n",i,j);
     switch(tabelas->colunas[j].tipo){
       case CHAR:
-      scanf(" %c", &tabelas->dados[i][j].ischar);
+      if(tabelas->dados[i][j].ischar=='\0'){
+          printf("Registro %d %d: ",i,j);
+      scanf(" %c", &tabelas->dados[i][j].ischar);}
       break;
       case(STR):
+      if(tabelas->dados[i][j].istring!=NULL){
+          printf("Registro %d %d: ",i,j);
         tabelas->dados[i][j].istring = malloc(sizeof(char)*50);
         printf("Digite uma string de até 50 caracteres de espaço:\n");
         fgets(tabelas->dados[i][j].istring,50,stdin);
-        scanf("%c",&temp);
+        scanf("%c",&temp);}
       break;
       case(INT):
-        scanf("%d", &tabelas->dados[i][j].isint);
+      if(tabelas->dados[i][j].isint=='\0'){
+          printf("Registro %d %d: ",i,j);
+        scanf("%d", &tabelas->dados[i][j].isint);}
       break;
       case(FLOAT):
-        scanf("%f", &tabelas->dados[i][j].isfloat);
+      if(tabelas->dados[i][j].isfloat=='\0'){
+          printf("Registro %d %d: ",i,j);
+        scanf("%f", &tabelas->dados[i][j].isfloat);}
       break;
       case(DOUBLE):
-        scanf("%lf", &tabelas->dados[i][j].isdouble);
+      if(tabelas->dados[i][j].isdouble=='\0'){
+          printf("Registro %d %d: ",i,j);
+        scanf("%lf", &tabelas->dados[i][j].isdouble);}
       break;
       default:
       printf("Tipo inválido!");
@@ -92,6 +101,18 @@ void inserir(Tabela *tabelas, int *counTab) {
     }
 
   }}
+}
+
+void supercolliner(Tabela *tabelas) {
+    tabelas->numLinhas++;
+
+    // Realoca a matriz de dados para a nova quantidade de linhas
+    tabelas->dados = realloc(tabelas->dados, tabelas->numLinhas * sizeof(Celula*));
+
+    // Aloca as colunas para a nova linha
+    tabelas->dados[tabelas->numLinhas - 1] = malloc(tabelas->numColunas * sizeof(Celula));
+
+    printf("Linha criada!\n\n");
 }
 
 void excluirTab(Tabela*tabelas,int *counTab){
@@ -113,22 +134,27 @@ void excluirTab(Tabela*tabelas,int *counTab){
 
 int main() {
     Tabela tabelas[10];//Permite até 10 tabelas
-    int escolha, counTab=0;
-    while(escolha!=6){
-    printf("O QUE DESEJA FAZER?\n1 - Criar tabela\n2 - Criar linha\n3 - Excluir tabela\n4 - Procurar registro\n5 - Excluir linha\n6 - Sair\n");
+    int escolha, counTab=0,qualtab;
+    while(escolha!=7){
+    printf("O QUE DESEJA FAZER?\n1 - Criar tabela\n2 - Criar linha\n3 - Excluir tabela\n4 - Adicionar registro(s)\n5 - Procurar registro\n6 - Excluir linha\n7 - Sair\n");
     scanf(" %i", &escolha);
-
+    printf("\e[1;1H\e[2J");
     switch (escolha){
     case 1: creator(&tabelas[counTab],&counTab);
     //Criador de tabelas por meio do tipo e nome
-    inserir(&tabelas[counTab],&counTab);
+    inserir(&tabelas[counTab]);
     //Inserir os registros
         break;
     case 2:
-
+    printf("Em qual tabela deseja inserir uma linha?\n");
+    for(int i=0;i<=counTab;i++){
+        printf("%d - %s\n",i,tabelas[i].nomeTabela);
+      }
+     scanf("%d",&qualtab);
+     supercolliner(&tabelas[qualtab]);
+     qualtab =0;
         break;
     case 3:
-      int qualtab;
       printf("Qual tabela deseja excluir?\n");
       for(int i=0;i<=counTab;i++){
         printf("%d - %s\n",i,tabelas[i].nomeTabela);
@@ -139,11 +165,19 @@ int main() {
       qualtab=0;
         break;
     case 4:
+    printf("Em qual tabela deseja inserir um registro?\n");
+    for(int i=0;i<=counTab;i++){
+        printf("%d - %s\n",i,tabelas[i].nomeTabela);
+      }
+      scanf("%d",&qualtab); //Maybe fazer uma função para "qualtab"?
+      inserir(&tabelas[qualtab]);
+      qualtab=0;
       break;
     case 5:
-
         break;
     case 6:
+        break;
+    case 7:
         break;
     default:
         printf("Numero invalido");
@@ -155,8 +189,9 @@ int main() {
 
     // Liberar memória alocada dinamicamente
     for(int i=0;i<counTab;i++){
-    free(tabelas[0].colunas);
-    free(tabelas[0].dados);}
+    free(tabelas[i].colunas);
+    free(tabelas[i].dados);}
 
     return 0;
 }
+
