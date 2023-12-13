@@ -132,6 +132,189 @@ void excluirTab(Tabela*tabelas,int *counTab){
   counTab--;
   }
 
+void pesquisarString(Tabela *tabela, int coluna, char *valorPesquisa, int escolhaOpcao) {
+    int numLinhas = tabela->numLinhas;
+    int colunaSelecionada = coluna;
+    int encontrados = 0;
+
+    switch (escolhaOpcao) {
+        
+        case 1: // Valores maiores que o informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) > 0) {
+                    // Faça algo com o registro encontrado (por exemplo, imprimir ou armazenar)
+                    encontrados++;
+                }
+            }
+            break;
+        case 2: // Valores maiores ou iguais ao informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) >= 0) {
+                    encontrados++;
+                }
+            }
+            break;
+        case 3: // Valores iguais ao informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) == 0) {
+                    encontrados++;
+                }
+            }
+            break;
+        case 4: // Valores menores que o informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) < 0) {
+                    encontrados++;
+                }
+            }
+            break;
+        case 5: // Valores menores ou iguais ao informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) <= 0) {
+                    encontrados++;
+                }
+            }
+            break;
+        default:
+            printf("Opção de pesquisa inválida.\n");
+            return;
+    
+    }
+
+    if (encontrados > 0) {
+        printf("Registros encontrados: %d\n", encontrados);
+    } else {
+        printf("Nenhum registro encontrado.\n");
+    }
+}
+
+void pesquisarNaoString(Tabela *tabela, int coluna, int escolhaOpcao) {
+    int numLinhas = tabela->numLinhas;
+    int colunaSelecionada = coluna;
+    int encontrados = 0;
+
+    switch (escolhaOpcao) {
+        
+        case 1: // Valores maiores que o informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (tabela->dados[i][colunaSelecionada].isint > valorPesquisaInt) {
+                    // Faça algo com o registro encontrado
+                    encontrados++;
+                }
+            }
+            break;
+        case 2: // Valores maiores ou iguais ao informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (tabela->dados[i][colunaSelecionada].isint >= valorPesquisaInt) {
+                    encontrados++;
+                }
+            }
+            break;
+        case 3: // Valores iguais ao informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (tabela->dados[i][colunaSelecionada].isint == valorPesquisaInt) {
+                    encontrados++;
+                }
+            }
+            break;
+        case 4: // Valores menores que o informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (tabela->dados[i][colunaSelecionada].isint < valorPesquisaInt) {
+                    encontrados++;
+                }
+            }
+            break;
+        case 5: // Valores menores ou iguais ao informado
+            for (int i = 0; i < numLinhas; i++) {
+                if (tabela->dados[i][colunaSelecionada].isint <= valorPesquisaInt) {
+                    encontrados++;
+                }
+            }
+            break;
+        default:
+            printf("Opção de pesquisa inválida.\n");
+            return;
+    
+    }
+
+    if (encontrados > 0) {
+        printf("Registros encontrados: %d\n", encontrados);
+    } else {
+        printf("Nenhum registro encontrado.\n");
+    }
+}
+
+void procurarRegistro(Tabela *tabelas) {
+    char nomeTabela[50];
+    printf("Digite o nome da tabela onde deseja realizar a pesquisa: ");
+    scanf("%s", nomeTabela);
+
+    // Procurar a tabela pelo nome
+    int indiceTabela = -1;
+    for (int i = 0; i < 10; i++) {
+        if (strcmp(tabelas[i].nomeTabela, nomeTabela) == 0) {
+            indiceTabela = i;
+            break;
+        }
+    }
+
+    if (indiceTabela == -1) {
+        printf("Tabela %s não encontrada.\n", nomeTabela);
+        return;
+    }
+
+    // Mostrar as colunas disponíveis na tabela
+    printf("Colunas disponíveis na tabela %s:\n", nomeTabela);
+    for (int i = 0; i < tabelas[indiceTabela].numColunas; i++) {
+        printf("%d - %s\n", i + 1, tabelas[indiceTabela].colunas[i].nomecol);
+    }
+
+    int escolhaColuna;
+    printf("Escolha o número da coluna para a pesquisa: ");
+    scanf("%d", &escolhaColuna);
+    escolhaColuna--; // Ajustar para o índice do array
+
+    if (escolhaColuna < 0 || escolhaColuna >= tabelas[indiceTabela].numColunas) {
+        printf("Escolha de coluna inválida.\n");
+        return;
+    }
+
+    // Se a coluna for do tipo string, oferecer opções adicionais
+    if (tabelas[indiceTabela].colunas[escolhaColuna].tipo == STR) {
+        printf("Opções de pesquisa para coluna %s:\n", tabelas[indiceTabela].colunas[escolhaColuna].nomecol);
+        printf("1. Valores maior que o informado\n");
+        printf("2. Valores maior ou igual ao informado\n");
+        printf("3. Valores igual ao informado\n");
+        printf("4. Valores menor que o informado\n");
+        printf("5. Valores menor ou igual ao informado\n");
+
+        int escolhaOpcao;
+        printf("Escolha a opção de pesquisa: ");
+        scanf("%d", &escolhaOpcao);
+
+        char valorPesquisa[50];
+        printf("Digite o valor para pesquisa na coluna %s: ", tabelas[indiceTabela].colunas[escolhaColuna].nomecol);
+        scanf("%s", valorPesquisa);
+
+        pesquisarString(&tabelas[indiceTabela], escolhaColuna, valorPesquisa, escolhaOpcao);
+
+    } else {
+        // Se a coluna não for do tipo string, a pesquisa será simples
+        int escolhaOpcao;
+        printf("Opções de pesquisa para coluna %s:\n", tabelas[indiceTabela].colunas[escolhaColuna].nomecol);
+        printf("1. Valores maior que o informado\n");
+        printf("2. Valores maior ou igual ao informado\n");
+        printf("3. Valores igual ao informado\n");
+        printf("4. Valores menor que o informado\n");
+        printf("5. Valores menor ou igual ao informado\n");
+
+        printf("Escolha a opção de pesquisa: ");
+        scanf("%d", &escolhaOpcao);
+
+        pesquisarNaoString(&tabelas[indiceTabela], escolhaColuna, escolhaOpcao);
+    }
+}
+
 int main() {
     Tabela tabelas[10];//Permite até 10 tabelas
     int escolha, counTab=0,qualtab;
@@ -174,6 +357,7 @@ int main() {
       qualtab=0;
       break;
     case 5:
+        void procurarRegistro(Tabela *tabelas);
         break;
     case 6:
         break;
