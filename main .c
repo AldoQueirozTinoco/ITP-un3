@@ -470,6 +470,8 @@ int main() {
       printf("Tabela %d excluida!\n",qualtab);
       qualtab=0;
         break;
+        case 8:
+        break;
     default:
         printf("Numero invalido");
         break;
