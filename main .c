@@ -138,19 +138,15 @@ void excluirTab(Tabela*tabelas,int *counTab){
   counTab--;//diminui a contagem de tabelas
   }
 
-<<<<<<< HEAD
 int compararStrings(const char *str1, const char *str2) {
     printf("\n%s\nVS\n%s\n",str1,str2);
     return strcmp(str1, str2); 
 }
 
-=======
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
 void pesquisarString(Tabela *tabela, int coluna, char *valorPesquisa, int escolhaOpcao) {
     int numLinhas = tabela->numLinhas;
     int colunaSelecionada = coluna;
     int encontrados = 0;
-<<<<<<< HEAD
     int resultado;
 
     for (int i = 0; i < numLinhas; i++) {
@@ -187,51 +183,6 @@ void pesquisarString(Tabela *tabela, int coluna, char *valorPesquisa, int escolh
                 printf("Opção de pesquisa inválida.\n");
                 return;
         }
-=======
-
-    switch (escolhaOpcao) {
-        
-        case 1: // Valores maiores que o informado
-            for (int i = 0; i < numLinhas; i++) {
-                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) > 0) {
-                    // Faça algo com o registro encontrado (por exemplo, imprimir ou armazenar)
-                    encontrados++;
-                }
-            }
-            break;
-        case 2: // Valores maiores ou iguais ao informado
-            for (int i = 0; i < numLinhas; i++) {
-                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) >= 0) {
-                    encontrados++;
-                }
-            }
-            break;
-        case 3: // Valores iguais ao informado
-            for (int i = 0; i < numLinhas; i++) {
-                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) == 0) {
-                    encontrados++;
-                }
-            }
-            break;
-        case 4: // Valores menores que o informado
-            for (int i = 0; i < numLinhas; i++) {
-                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) < 0) {
-                    encontrados++;
-                }
-            }
-            break;
-        case 5: // Valores menores ou iguais ao informado
-            for (int i = 0; i < numLinhas; i++) {
-                if (strcmp(tabela->dados[i][colunaSelecionada].istring, valorPesquisa) <= 0) {
-                    encontrados++;
-                }
-            }
-            break;
-        default:
-            printf("Opção de pesquisa inválida.\n");
-            return;
-    
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
     }
 
     if (encontrados > 0) {
@@ -245,7 +196,6 @@ void pesquisarNaoString(Tabela *tabela, int coluna, int escolhaOpcao) {
     int numLinhas = tabela->numLinhas;
     int colunaSelecionada = coluna;
     int encontrados = 0;
-<<<<<<< HEAD
     int valorPesquisaInt;
     float valorPesquisaFloat;
     double valorPesquisaDouble;
@@ -286,22 +236,11 @@ void pesquisarNaoString(Tabela *tabela, int coluna, int escolhaOpcao) {
                     default:
                         printf("Tipo inválido!\n");
                         return;
-=======
-
-    switch (escolhaOpcao) {
-        
-        case 1: // Valores maiores que o informado
-            for (int i = 0; i < numLinhas; i++) {
-                if (tabela->dados[i][colunaSelecionada].isint > valorPesquisaInt) {
-                    // Faça algo com o registro encontrado
-                    encontrados++;
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
                 }
             }
             break;
         case 2: // Valores maiores ou iguais ao informado
             for (int i = 0; i < numLinhas; i++) {
-<<<<<<< HEAD
                 switch (tabela->colunas[colunaSelecionada].tipo) {
                     case INT:
                         if (tabela->dados[i][colunaSelecionada].isint >= valorPesquisaInt) {
@@ -321,16 +260,11 @@ void pesquisarNaoString(Tabela *tabela, int coluna, int escolhaOpcao) {
                     default:
                         printf("Tipo inválido!\n");
                         return;
-=======
-                if (tabela->dados[i][colunaSelecionada].isint >= valorPesquisaInt) {
-                    encontrados++;
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
                 }
             }
             break;
         case 3: // Valores iguais ao informado
             for (int i = 0; i < numLinhas; i++) {
-<<<<<<< HEAD
                 switch (tabela->colunas[colunaSelecionada].tipo) {
                     case INT:
                         if (tabela->dados[i][colunaSelecionada].isint == valorPesquisaInt) {
@@ -350,16 +284,11 @@ void pesquisarNaoString(Tabela *tabela, int coluna, int escolhaOpcao) {
                     default:
                         printf("Tipo inválido!\n");
                         return;
-=======
-                if (tabela->dados[i][colunaSelecionada].isint == valorPesquisaInt) {
-                    encontrados++;
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
                 }
             }
             break;
         case 4: // Valores menores que o informado
             for (int i = 0; i < numLinhas; i++) {
-<<<<<<< HEAD
                 switch (tabela->colunas[colunaSelecionada].tipo) {
                     case INT:
                         if (tabela->dados[i][colunaSelecionada].isint < valorPesquisaInt) {
@@ -379,16 +308,11 @@ void pesquisarNaoString(Tabela *tabela, int coluna, int escolhaOpcao) {
                     default:
                         printf("Tipo inválido!\n");
                         return;
-=======
-                if (tabela->dados[i][colunaSelecionada].isint < valorPesquisaInt) {
-                    encontrados++;
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
                 }
             }
             break;
         case 5: // Valores menores ou iguais ao informado
             for (int i = 0; i < numLinhas; i++) {
-<<<<<<< HEAD
                 switch (tabela->colunas[colunaSelecionada].tipo) {
                     case INT:
                         if (tabela->dados[i][colunaSelecionada].isint <= valorPesquisaInt) {
@@ -408,20 +332,12 @@ void pesquisarNaoString(Tabela *tabela, int coluna, int escolhaOpcao) {
                     default:
                         printf("Tipo inválido!\n");
                         return;
-=======
-                if (tabela->dados[i][colunaSelecionada].isint <= valorPesquisaInt) {
-                    encontrados++;
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
                 }
             }
             break;
         default:
             printf("Opção de pesquisa inválida.\n");
             return;
-<<<<<<< HEAD
-=======
-    
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
     }
 
     if (encontrados > 0) {
@@ -431,7 +347,6 @@ void pesquisarNaoString(Tabela *tabela, int coluna, int escolhaOpcao) {
     }
 }
 
-<<<<<<< HEAD
 
 void procurarRegistro(Tabela *tabelas,int qualtab,int counTab) {
     char nomeTabela[50];
@@ -440,11 +355,6 @@ void procurarRegistro(Tabela *tabelas,int qualtab,int counTab) {
         printf("- %s\n",tabelas[i].nomeTabela);
       }
     
-=======
-void procurarRegistro(Tabela *tabelas) {
-    char nomeTabela[50];
-    printf("Digite o nome da tabela onde deseja realizar a pesquisa: ");
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
     scanf("%s", nomeTabela);
 
     // Procurar a tabela pelo nome
@@ -492,11 +402,7 @@ void procurarRegistro(Tabela *tabelas) {
 
         char valorPesquisa[50];
         printf("Digite o valor para pesquisa na coluna %s: ", tabelas[indiceTabela].colunas[escolhaColuna].nomecol);
-<<<<<<< HEAD
         scanf(" %s",valorPesquisa);
-=======
-        scanf("%s", valorPesquisa);
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
 
         pesquisarString(&tabelas[indiceTabela], escolhaColuna, valorPesquisa, escolhaOpcao);
 
@@ -564,25 +470,6 @@ int main() {
       printf("Tabela %d excluida!\n",qualtab);
       qualtab=0;
         break;
-<<<<<<< HEAD
-=======
-    case 4:
-    printf("Em qual tabela deseja inserir um registro?\n");
-    for(int i=0;i<=counTab;i++){
-        printf("%d - %s\n",i,tabelas[i].nomeTabela);
-      }
-      scanf("%d",&qualtab); //Maybe fazer uma função para "qualtab"?
-      inserir(&tabelas[qualtab]);
-      qualtab=0;
-      break;
-    case 5:
-        void procurarRegistro(Tabela *tabelas);
-        break;
-    case 6:
-        break;
-    case 7:
-        break;
->>>>>>> a1454dd584d4e24ae42005b4d6e9d3be7158a0d6
     default:
         printf("Numero invalido");
         break;
