@@ -26,6 +26,13 @@ typedef struct {
     Celula **dados; // matriz de dados
 } Tabela;
 
+void qualtabela(Tabela tabelas[],int counTab,int *qualtab){
+    for(int i=0;i<=counTab;i++){
+        printf("%d - %s\n",i,tabelas[i].nomeTabela);
+      }
+     scanf("%d",qualtab);
+}
+
 void creator(Tabela *tabelas, int *counTab) {
     char nometabelas[50];
     printf("Escolha um nome para a tabela: ");
@@ -137,6 +144,10 @@ void excluirTab(Tabela*tabelas,int *counTab){
   }
   counTab--;//diminui a contagem de tabelas
   }
+  
+void list(){//listar todos os dados da tabela
+    
+}
 
 int compararStrings(const char *str1, const char *str2) {
     printf("\n%s\nVS\n%s\n",str1,str2);
@@ -440,14 +451,13 @@ int main() {
     //Inserir os registros
         break;
     case 2:
-
-        break;
-        case 3:
-    printf("Em qual tabela deseja inserir uma linha e os registros?\n");
     for(int i=0;i<=counTab;i++){
         printf("%d - %s\n",i,tabelas[i].nomeTabela);
       }
-     scanf("%d",&qualtab);
+        break;
+        case 3:
+        printf("Em qual tabela deseja inserir uma linha e os registros?\n");
+        qualtabela(tabelas,counTab,&qualtab);
      supercolliner(&tabelas[qualtab]);
      inserir(&tabelas[qualtab]);
      qualtab =0;
@@ -462,10 +472,7 @@ int main() {
         break;
     case 7:
           printf("Qual tabela deseja excluir?\n");
-      for(int i=0;i<=counTab;i++){
-        printf("%d - %s\n",i,tabelas[i].nomeTabela);
-      }
-      scanf("%d",&qualtab);
+      qualtabela(tabelas,counTab,&qualtab);
       excluirTab(&tabelas[qualtab],&counTab);
       printf("Tabela %d excluida!\n",qualtab);
       qualtab=0;
