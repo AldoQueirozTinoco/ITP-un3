@@ -146,6 +146,7 @@ void excluirTab(Tabela*tabelas,int *counTab){
   }
   
 void list(Tabela tabelas){//listar todos os dados da tabela
+printf("\n");
     for(int i=0;i<tabelas.numLinhas;i++){
         for(int j=0;j<tabelas.numColunas;j++){
             switch(tabelas.colunas[j].tipo){
@@ -159,15 +160,16 @@ void list(Tabela tabelas){//listar todos os dados da tabela
                 printf("%d ",tabelas.dados[i][j].isint);
                 break;
                 case FLOAT:
-                printf("%f ",tabelas.dados[i][j].isfloat);
+                printf("%.2f ",tabelas.dados[i][j].isfloat);
                 break;
                 case DOUBLE:
-                printf("%lf ",tabelas.dados[i][j].isdouble);
+                printf("%.2lf ",tabelas.dados[i][j].isdouble);
                 break;
             }
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 int compararStrings(const char *str1, const char *str2) {
@@ -379,7 +381,6 @@ void pesquisarNaoString(Tabela *tabela, int coluna, int escolhaOpcao) {
     }
 }
 
-
 void procurarRegistro(Tabela *tabelas,int qualtab,int counTab) {
     char nomeTabela[50];
     printf("Digite o nome da tabela onde deseja realizar a pesquisa: \n");
@@ -474,13 +475,44 @@ void burnTheLine(Tabela *tabelas){//Excluidor de linhas
     }
 }
 
+void toFile(Tabela tabelas){//Enviar a tabela criada para o arquivo
+
+    FILE *arquivo;
+    arquivo = fopen(tabelas.nomeTabela, "w" );
+    fprintf(arquivo,"--------\n");
+    for(int i=0;i<tabelas.numLinhas;i++){
+        for(int j=0;j<tabelas.numColunas;j++){
+            switch(tabelas.colunas[j].tipo){
+                case CHAR:
+                fprintf(arquivo,"%c ",tabelas.dados[i][j].ischar);
+                break;
+                case STR:
+                fprintf(arquivo,"%s ",tabelas.dados[i][j].istring);
+                break;
+                case INT:
+                fprintf(arquivo,"%d ",tabelas.dados[i][j].isint);
+                break;
+                case FLOAT:
+                fprintf(arquivo,"%.2f ",tabelas.dados[i][j].isfloat);
+                break;
+                case DOUBLE:
+                fprintf(arquivo,"%.2lf ",tabelas.dados[i][j].isdouble);
+                break;
+            }
+        }
+        fprintf(arquivo,"\n");
+    }
+    fprintf(arquivo,"--------");
+    fclose(arquivo);
+}
+
 int main() {
     Tabela tabelas[10];//Permite até 10 tabelas
     int escolha, counTab=0,qualtab;
-    while(escolha!=8){
+    while(escolha!=9){
     //printf("O QUE DESEJA FAZER?\n1 - Criar tabela\n2 - Criar linha\n3 - Excluir tabela\n4 - Adicionar registro(s)\n5 - Procurar registro\n6 - Excluir linha\n7 - Sair\n");
     
-    printf("1 - Criar um tabela\n2 - Listar todas as tabelas\n3 - Criar uma nova tupla (linha e registro) na tabela\n4 - Listar todos os dados de uma tabela\n5 - Pesquisar valor em uma tabela\n6 - Apagar uma tupla (registros e linha) de uma tabela\n7 - Apagar uma tabela\n8 - Sair\n");
+    printf("1 - Criar um tabela\n2 - Listar todas as tabelas\n3 - Criar uma nova tupla (linha e registro) na tabela\n4 - Listar todos os dados de uma tabela\n5 - Pesquisar valor em uma tabela\n6 - Apagar uma tupla (registros e linha) de uma tabela\n7 - Apagar uma tabela\n8 - Enviar ao arquivo\n9 - Sair\n");
     
     scanf(" %i", &escolha);
     printf("\e[1;1H\e[2J");
@@ -529,6 +561,13 @@ int main() {
       qualtab=0;
         break;
         case 8:
+        for(int k=0;k<=counTab;k++){
+        toFile(tabelas[k]);
+        }
+        printf("Passadas para o arquivo com sucesso!\n");
+        break;
+        case 9:
+        
         break;
     default:
         printf("Numero invalido");
