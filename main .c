@@ -145,7 +145,7 @@ void excluirTab(Tabela*tabelas,int *counTab){
   counTab--;//diminui a contagem de tabelas
   }
   
-void list(Tabela tabelas,int qualtab){//listar todos os dados da tabela
+void list(Tabela tabelas){//listar todos os dados da tabela
     for(int i=0;i<tabelas.numLinhas;i++){
         for(int j=0;j<tabelas.numColunas;j++){
             switch(tabelas.colunas[j].tipo){
@@ -455,13 +455,32 @@ void procurarRegistro(Tabela *tabelas,int qualtab,int counTab) {
     }
 }
 
+void burnTheLine(Tabela *tabelas){//Excluidor de linhas
+    
+    // Verifica se há linhas para excluir
+    if (tabelas->numLinhas > 0) {
+        // Libera a memória alocada para a última linha
+        free(tabelas->dados[tabelas->numLinhas - 1]);
+
+        // Decrementa o número de linhas
+        tabelas->numLinhas--;
+
+        // Realoca a matriz de dados para a nova quantidade de linhas
+        tabelas->dados = realloc(tabelas->dados, tabelas->numLinhas * sizeof(Celula*));
+
+        printf("Linha excluída!\n\n");
+    } else {
+        printf("A tabela está vazia. Nenhuma linha para excluir.\n\n");
+    }
+}
+
 int main() {
     Tabela tabelas[10];//Permite até 10 tabelas
     int escolha, counTab=0,qualtab;
     while(escolha!=8){
     //printf("O QUE DESEJA FAZER?\n1 - Criar tabela\n2 - Criar linha\n3 - Excluir tabela\n4 - Adicionar registro(s)\n5 - Procurar registro\n6 - Excluir linha\n7 - Sair\n");
     
-    printf("1 - Criar um tabela\n2 - Listar todas as tabelas\n3 - Criar uma nova tupla (linha ou registro) na tabela\n4 - Listar todos os dados de uma tabela\n5 - Pesquisar valor em uma tabela\n6 - Apagar uma tupla (registro ou linha) de uma tabela\n7 - Apagar uma tabela\n8 - Sair\n");
+    printf("1 - Criar um tabela\n2 - Listar todas as tabelas\n3 - Criar uma nova tupla (linha e registro) na tabela\n4 - Listar todos os dados de uma tabela\n5 - Pesquisar valor em uma tabela\n6 - Apagar uma tupla (registros e linha) de uma tabela\n7 - Apagar uma tabela\n8 - Sair\n");
     
     scanf(" %i", &escolha);
     printf("\e[1;1H\e[2J");
@@ -487,13 +506,20 @@ int main() {
     case 4:
     printf("Deseja listar os elementos de qual tabela?\n");
       qualtabela(tabelas,counTab,&qualtab);
-      list(tabelas[qualtab],qualtab);
+      list(tabelas[qualtab]);
       qualtab =0;
       break;
     case 5:
         procurarRegistro(tabelas,qualtab,counTab);
         break;
     case 6:
+    printf("De qual tabela deseja apagar uma linha?\n");
+    /*Como o programa já pedia os registros junto a criação da linha,
+    não haveria sentido permitir deletar apenas um registro, logo,
+    deleta-se a linha por completo.*/
+    qualtabela(tabelas,counTab,&qualtab);
+    burnTheLine(&tabelas[qualtab]);
+    qualtab=0;
         break;
     case 7:
           printf("Qual tabela deseja excluir?\n");
