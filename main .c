@@ -75,12 +75,12 @@ void inserir(Tabela *tabelas) {
     switch(tabelas->colunas[j].tipo){
       case CHAR:
       if(tabelas->dados[i][j].ischar=='\0'){
-          printf("Registro %d %d: ",i,j);
+          printf("Registro(CHAR) linha%d col%d: ",i,j);
       scanf(" %c", &tabelas->dados[i][j].ischar);}
       break;
       case STR:
       if(tabelas->dados[i][j].istring==NULL){
-          printf("Registro %d %d: ",i,j);
+          printf("Registro(STRING) linha%d col%d: ",i,j);
         tabelas->dados[i][j].istring = malloc(sizeof(char)*50);
         printf("Digite uma string de até 50 caracteres de espaço:\n");
         scanf("%s",tabelas->dados[i][j].istring);
@@ -95,17 +95,17 @@ void inserir(Tabela *tabelas) {
       break;
       case(INT):
       if(tabelas->dados[i][j].isint=='\0'){
-          printf("Registro %d %d: ",i,j);
+          printf("Registro(INT) linha%d col%d: ",i,j);
         scanf("%d", &tabelas->dados[i][j].isint);}
       break;
       case(FLOAT):
       if(tabelas->dados[i][j].isfloat=='\0'){
-          printf("Registro %d %d: ",i,j);
+          printf("Registro(float) linha%d col%d: ",i,j);
         scanf("%f", &tabelas->dados[i][j].isfloat);}
       break;
       case(DOUBLE):
       if(tabelas->dados[i][j].isdouble=='\0'){
-          printf("Registro %d %d: ",i,j);
+          printf("Registro(double) linha%d col%d: ",i,j);
         scanf("%lf", &tabelas->dados[i][j].isdouble);}
       break;
       default:
@@ -145,8 +145,29 @@ void excluirTab(Tabela*tabelas,int *counTab){
   counTab--;//diminui a contagem de tabelas
   }
   
-void list(){//listar todos os dados da tabela
-    
+void list(Tabela tabelas,int qualtab){//listar todos os dados da tabela
+    for(int i=0;i<tabelas.numLinhas;i++){
+        for(int j=0;j<tabelas.numColunas;j++){
+            switch(tabelas.colunas[j].tipo){
+                case CHAR:
+                printf("%c ",tabelas.dados[i][j].ischar);
+                break;
+                case STR:
+                printf("%s ",tabelas.dados[i][j].istring);
+                break;
+                case INT:
+                printf("%d ",tabelas.dados[i][j].isint);
+                break;
+                case FLOAT:
+                printf("%f ",tabelas.dados[i][j].isfloat);
+                break;
+                case DOUBLE:
+                printf("%lf ",tabelas.dados[i][j].isdouble);
+                break;
+            }
+        }
+        printf("\n");
+    }
 }
 
 int compararStrings(const char *str1, const char *str2) {
@@ -464,7 +485,11 @@ int main() {
         break;
         
     case 4:
-      
+    printf("Deseja listar os elementos de qual tabela?\n");
+      qualtabela(tabelas,counTab,&qualtab);
+      list(tabelas[qualtab],qualtab);
+      qualtab =0;
+      break;
     case 5:
         procurarRegistro(tabelas,qualtab,counTab);
         break;
