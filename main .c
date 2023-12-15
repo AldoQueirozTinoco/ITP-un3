@@ -22,7 +22,6 @@ typedef struct {
     int numLinhas;
     int numColunas;
     colunas *colunas; // para nome e types
-    colunas chavePrimaria;
     Celula **dados; // matriz de dados
 } Tabela;
 
@@ -456,7 +455,7 @@ void procurarRegistro(Tabela *tabelas,int qualtab,int counTab) {
     }
 }
 
-void burnTheLine(Tabela *tabelas){//Excluidor de linhas
+void burnTheLine(Tabela *tabelas){//Exclui a ultima linha da tabela
     
     // Verifica se há linhas para excluir
     if (tabelas->numLinhas > 0) {
@@ -526,6 +525,7 @@ int main() {
     for(int i=0;i<=counTab;i++){
         printf("%d - %s\n",i,tabelas[i].nomeTabela);
       }
+      printf("\n");
         break;
         case 3:
         printf("Em qual tabela deseja inserir uma linha e os registros?\n");
